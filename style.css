@@ -1,0 +1,182 @@
+/* To change the typeface, the axis or the sizes, edit these lines. */
+:root {
+  --font: Satoshi, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --axis: clamp(4.5rem, 15vw, 15rem); /* where the second column starts */
+  --gutter: clamp(1rem, 3vw, 2.5rem);
+  --start: calc(var(--axis) + var(--gutter)); /* from the screen edge to the second column */
+  --ink: #14161f;
+}
+
+:root[data-ink="light"] { --ink: #fbf9f4; }
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: #0b1026;
+  color: var(--ink);
+  font: 400 1.0625rem/1.45 var(--font);
+  transition: color 0.6s;
+}
+
+#sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(var(--sky-top, #0b1026), var(--sky-bottom, #1a2144));
+}
+
+#clock {
+  position: fixed;
+  top: var(--gutter);
+  right: var(--gutter);
+  margin: 0;
+  font-size: 1.0625rem;
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3, p, dl, dd { margin: 0; }
+h1, h2, h3 { font-weight: 400; }
+video, img { display: block; max-width: 100%; }
+time { font-variant-numeric: tabular-nums; }
+
+/* Opening and closing */
+.opening, .closing {
+  min-height: 100svh;
+  padding: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+h1 {
+  font-size: clamp(3.25rem, 11vw, 12rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.intro { margin-top: 1.5rem; font-size: clamp(1.25rem, 2vw, 1.75rem); }
+
+.closing h2 {
+  font-size: clamp(2.75rem, 7vw, 8rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+
+/* Moments that no group has chosen */
+.moment {
+  display: grid;
+  grid-template-columns: var(--axis) 1fr;
+  padding: 2.5svh var(--gutter);
+  font-size: clamp(1.125rem, 1.7vw, 1.5rem);
+}
+
+/* Projects */
+.project {
+  display: grid;
+  grid-template-columns: var(--axis) 1fr;
+  align-content: center;
+  min-height: 100svh;
+  padding: calc(var(--gutter) * 2) var(--gutter);
+}
+
+.project > time { font-size: clamp(1.125rem, 1.7vw, 1.5rem); padding-top: 0.4em; }
+.body { min-width: 0; }
+
+.project h2 {
+  font-size: clamp(2.5rem, 6vw, 7rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.title { margin: 0.5rem 0 1.25rem; font-size: clamp(1.125rem, 1.7vw, 1.5rem); }
+
+.film {
+  width: min(100%, calc(58svh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #0003;
+}
+
+.short { margin-top: 1rem; max-width: 44em; }
+
+.toggle {
+  display: block;
+  margin-top: 0.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.when-open, .open .when-closed { display: none; }
+.open .when-open { display: inline; }
+
+/* Opening a project: the height grows from 0 while the content fades in.
+   .more reaches the screen edges so that the product shots are not cut at the column. */
+.more {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin: 0 calc(var(--gutter) * -1) 0 calc(var(--start) * -1);
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 0.5s ease, opacity 0.4s ease, visibility 0.5s;
+}
+
+.open .more { grid-template-rows: 1fr; opacity: 1; visibility: visible; }
+.more-inner { min-height: 0; overflow: hidden; padding: 0 var(--gutter) 0 var(--start); }
+
+/* Product shots: they start on the text axis and scroll out to the screen edges.
+   Native sideways scrolling, no slider library. */
+.shots {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem calc(var(--gutter) * -1) 0 calc(var(--start) * -1);
+  padding: 0 var(--gutter) 0.5rem var(--start);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: var(--start);
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.shots::-webkit-scrollbar { display: none; }
+.shots.dragging { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+
+.shots img {
+  flex: none;
+  width: min(85%, calc(58svh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  scroll-snap-align: start;
+}
+
+.long { margin-top: 1.5rem; max-width: 44em; font-size: clamp(1.125rem, 1.7vw, 1.5rem); line-height: 1.35; }
+
+dl { margin-top: 1.5rem; max-width: 44em; display: grid; grid-template-columns: 12em 1fr; gap: 0.5rem 1rem; }
+
+.prototype-label { margin-top: 2rem; font-size: inherit; }
+.prototype { margin-top: 0.5rem; width: min(100%, calc(58svh * 16 / 9)); aspect-ratio: 16 / 9; background: #0003; }
+.group { margin-top: 1.5rem; }
+
+/* Phones: the text and the video take the whole width */
+@media (max-width: 40rem) {
+  :root { --start: var(--gutter); }
+  /* On phones a project is as tall as its content, so it sits close to the moments around it. */
+  .project { grid-template-columns: 1fr; min-height: 0; align-content: start; }
+  .project > time { padding: 0 0 0.25rem; }
+  .film { width: 100%; }
+  dl { grid-template-columns: 1fr; }
+  dd { margin-bottom: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .more { transition: none; }
+}

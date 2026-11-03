@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Everyday Intelligence</title>
+  <meta name="description" content="One day of everyday moments, reimagined with artificial intelligence by the students of a workshop at NABA Milano.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="sky" aria-hidden="true"></div>
+  <p id="clock" aria-hidden="true">00:00</p>
+
+  <header class="opening" data-minute="0">
+    <h1>Everyday Intelligence</h1>
+    <p class="intro">One day of everyday moments, reimagined with artificial intelligence.</p>
+  </header>
+
+  <main id="day"></main>
+
+  <footer class="closing" data-minute="1440">
+    <h2>Good night</h2>
+    <p>A two-day workshop at NABA Milano, December 2026.<br>Led by Matteo Palù and Michele Aquila.</p>
+  </footer>
+
+  <template id="moment-template">
+    <p class="moment"><time></time><span></span></p>
+  </template>
+
+  <template id="project-template">
+    <article class="project">
+      <time></time>
+      <div class="body">
+        <h2></h2>
+        <p class="title"></p>
+        <video class="film" muted loop playsinline preload="metadata"></video>
+        <p class="short"></p>
+        <button class="toggle" type="button" aria-expanded="false"><span class="when-closed">Open the project</span><span class="when-open">Close the project</span></button>
+        <div class="more">
+          <div class="more-inner">
+            <div class="shots" tabindex="0" aria-label="Product shots"></div>
+            <p class="long"></p>
+            <dl>
+              <dt>What the person does</dt><dd data-field="person"></dd>
+              <dt>What the AI receives</dt><dd data-field="receives"></dd>
+              <dt>What the AI does</dt><dd data-field="does"></dd>
+              <dt>What comes back</dt><dd data-field="returns"></dd>
+            </dl>
+            <h3 class="prototype-label">The prototype</h3>
+            <video class="prototype" controls playsinline preload="none"></video>
+            <p class="group"></p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <noscript><p>This page needs JavaScript to show the day.</p></noscript>
+
+  <script src="moments.js"></script>
+  <script src="projects.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
